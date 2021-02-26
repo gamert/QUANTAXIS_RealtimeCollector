@@ -1,6 +1,7 @@
 #
 from QAPUBSUB.consumer import subscriber
 from QAPUBSUB.producer import publisher
+from QARealtimeCollector.utils.common import str_eval
 from QUANTAXIS.QAEngine.QAThreadEngine import QA_Thread
 from QUANTAXIS.QAData.data_resample import QA_data_futuremin_resample, QA_data_futuremin_resample_tb_kq
 from QUANTAXIS.QAUtil.QADate_trade import QA_util_future_to_tradedatetime
@@ -27,8 +28,9 @@ class NpEncoder(json.JSONEncoder):
 
 
 class QARTC_Resampler(QA_Thread):
-    def __init__(self, code='rb1910', freqence='60min', model='tb'):
+    def __init__(self, code='rb2106', freqence='60min', model='tb'):
         super().__init__()
+        code = str_eval(code)   #remove the ‘’
         self.code = code
         self.freqence = freqence
         self.sub = subscriber(

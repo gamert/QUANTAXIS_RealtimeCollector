@@ -4,6 +4,7 @@ import json
 
 from QAPUBSUB import consumer, producer
 from QARealtimeCollector.setting import eventmq_ip, mongo_ip
+from QARealtimeCollector.utils.common import str_eval
 from QUANTAXIS.QAUtil.QALogs import QA_util_log_info
 
 
@@ -12,13 +13,13 @@ class QARTC_CTPTickCollector():
         self.data = {}
         self.is_send = False
         self.last_volume = 0
-
+        code = str_eval(code)   #remove the ‘’
         self.pro = producer.publisher(exchange='bar_1min_{}'.format(
             code), user='admin', password='admin', host=eventmq_ip)
         self.pro_realtimemin = producer.publisher(exchange='realtime_min_{}'.format(
             code), user='admin', password='admin', host=eventmq_ip)
         self.c = consumer.subscriber_routing(
-            exchange='tick', routing_key=code, user='admin', password='admin', host=eventmq_ip)
+            exchange=subexchange, routing_key=code, user='admin', password='admin', host=eventmq_ip)
 
         print('start ctptick collector {}'.format(code))
 

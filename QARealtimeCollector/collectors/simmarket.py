@@ -3,12 +3,14 @@ import json
 import time
 
 from QAPUBSUB.producer import publisher_routing
+from QARealtimeCollector.utils.common import str_eval
 from QUANTAXIS_RandomPrice import get_random_price
 from QARealtimeCollector.setting import eventmq_ip, mongo_ip
 
 
 class QARTC_RandomTick():
     def __init__(self, code, date, price, interval):
+        code = str_eval(code)   #remove the ‘’
         self.code = code
         self.date = date
         self.price = price
@@ -27,3 +29,13 @@ class QARTC_RandomTick():
             time.sleep(self.interval)
             self.pub.pub(
                 json.dumps(item.to_dict()), routing_key=self.code)
+
+
+
+## QARC_Random --code 'rb2106' --date 20210202 --price 3646 --interval 0
+
+if __name__ == "__main__":
+    code = 'rb2106'
+    code = 'OKEX.1INCH-USDT'
+    data = QARTC_RandomTick(code,20210202,3646,1).data;
+    print(data)

@@ -30,7 +30,7 @@ class QARTC_WsCollector(QA_Thread):
         self.quoteclient = pymongo.MongoClient(host=mongo_ip).QAREALTIME.realtimeQuote
         self.ws.on_open = _onopen
         self.data = {}
-        self.subscribe_list = ['SHFE.rb1910', 'DCE.j1909']
+        self.subscribe_list = ['SHFE.rb2106', 'DCE.j1909']
         self.sub = subscriber_routing(host=eventmq_ip, exchange='QARealtime_Market', routing_key='future')
         self.sub.callback = self.callback
         threading.Thread(target=self.ws.run_forever,
@@ -76,7 +76,7 @@ class QARTC_WsCollector(QA_Thread):
 
     def run(self):
         time.sleep(2)
-        self.ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
+        self.ws.send(subscribe_quote('SHFE.rb2106,DCE.j1909'))
         while True:
             time.sleep(1)
 

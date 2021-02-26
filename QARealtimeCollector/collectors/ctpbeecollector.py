@@ -2,6 +2,7 @@ import datetime
 import json
 
 from QAPUBSUB import consumer, producer
+from QARealtimeCollector.utils.common import str_eval
 from QUANTAXIS.QAUtil.QALogs import QA_util_log_info
 from QARealtimeCollector.setting import mongo_ip, eventmq_ip, market_data_password, market_data_user
 from QUANTAXIS.QAEngine.QAThreadEngine import QA_Thread
@@ -18,7 +19,7 @@ class QARTC_CtpBeeCollector(QA_Thread):
         super().__init__()
         self.data = {}
         self.min5_data = {}
-
+        code = str_eval(code)   #remove the ‘’
         self.pro = producer.publisher(host=eventmq_ip, exchange='bar_1min_{}'.format(code),
                                       user=market_data_user, password=market_data_password)
         self.pro_realtimemin = producer.publisher(host=eventmq_ip, exchange='realtime_min_{}'.format(
@@ -122,7 +123,8 @@ class QARTC_CtpBeeCollector(QA_Thread):
 
 
 if __name__ == '__main__':
-    pass
+    r = QARTC_CtpBeeCollector('rb2106')
+    r.start()
     # import click
     # @click.command()
     # @click.option('--code', default='au1910')

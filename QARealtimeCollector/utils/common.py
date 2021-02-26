@@ -17,6 +17,9 @@ from QUANTAXIS.QAUtil.QAParameter import MARKET_TYPE
 from joblib import Parallel, delayed
 from pandas import concat, date_range, DataFrame, DatetimeIndex
 
+# add for safe eval
+def str_eval(code):
+    return  eval(code) if code.startswith("\'") or code.startswith("\"") else code
 
 def create_empty_stock_df(code, date: datetime.datetime = None, frequency=1):
     """
@@ -334,3 +337,5 @@ def util_is_trade_time(
                             return True
                     return False
         return False
+    elif market is MARKET_TYPE.CRYPTOCURRENCY:
+        return True

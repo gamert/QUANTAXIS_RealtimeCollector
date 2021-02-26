@@ -25,7 +25,7 @@ from QUANTAXIS.QAFetch.QAQuery_Advance import QA_fetch_stock_min_adv, QA_fetch_s
 from QUANTAXIS.QAUtil.QADate_trade import QA_util_get_pre_trade_date
 from pandas import concat, DataFrame, DatetimeIndex
 
-from QARealtimeCollector.utils.QATdx_adv import QA_Tdx_Executor
+from QARealtimeCollector.connector.QATdx_adv import QA_Tdx_Executor
 # from utils.TdxAdv import QA_Tdx_Executor
 from QARealtimeCollector.utils.common import util_is_trade_time, get_file_name_by_date, logging_csv
 
@@ -296,14 +296,15 @@ class QARTCStockBar(QA_Tdx_Executor):
 @click.option('-t', '--delay', default=20.5, help="fetch data interval, float", type=click.FLOAT)
 @click.option('-log', '--logfile', help="log file path", type=click.Path(exists=False))
 @click.option('-log_dir', '--log_dir', help="log path", type=click.Path(exists=False))
-def main(delay: float = 20.5, logfile: str = None, log_dir: str = None):
+def main(delay: float = 20.5, logfile: str = None, log_dir: str = "~"):
     try:
         from QARealtimeCollector.utils.logconf import update_log_file_config
         logfile = 'stock.collector.log' if logfile is None else logfile
         logging.config.dictConfig(update_log_file_config(logfile))
     except Exception as e:
         print(e.__str__())
-    QARTCStockBar(delay=delay, log_dir=log_dir.replace('~', os.path.expanduser('~')), debug=False).start()
+    log_dir = './log' if log_dir is  None else log_dir.replace('~', os.path.expanduser('~'))
+    QARTCStockBar(delay=delay,log_dir= log_dir , debug=False).start()
 
 
 if __name__ == "__main__":

@@ -66,9 +66,9 @@ QARC_Stock
 # 期货
 nohup QACTPBEE --userid 133496  >> ./output_ctpbee.log 2>&1 &
 # 缺少说明
-nohup QARC_Start --code rb1910 >> ./output_qarcCollect.log 2>&1 &
+nohup QARC_Start --code rb2106 >> ./output_qarcCollect.log 2>&1 &
 # 缺少说明
-nohup QARC_Resample --code rb1910 --freq 60min >> ./output_resample.log 2>&1 &
+nohup QARC_Resample --code rb2106 --freq 60min >> ./output_resample.log 2>&1 &
 ```
 
 - 虚拟行情
@@ -78,7 +78,7 @@ QARC_WEBSERVER
 # 虚拟行情测试, 切记: 此命令会污染实时行情源, 切记不能和实时行情同时运行
 # price是设定的初始价格, 会基于ou行情伪造实时tick
 # interval是tick间隔, 1 指的是1秒一个
-nohup QARC_Random  --code rb1910 --date 20190619 --price 3800 --interval 1
+nohup QARC_Random  --code rb2106 --date 20190619 --price 3800 --interval 1
 ```
 
 ## 关于订阅申请
@@ -112,7 +112,7 @@ qaps_sub --exchange stocktransaction --model fanout
 
 > 格式: $type_$freq_$code
 
-- example: realtime_1min_rb1910, bar_15min_jm1909
+- example: realtime_1min_rb2106, bar_15min_jm1909
 
 > 期货
 
@@ -120,7 +120,7 @@ qaps_sub --exchange stocktransaction --model fanout
 |:-|:-|:-|
 |type|realtime,bar|realtime就是在这个级别下的实时更新|
 |freq|1min,5min, 15min, 30min ,60min|周期|
-|code|rb1910,j1909, etc.|期货合约代码|
+|code|rb2106,j1909, etc.|期货合约代码|
 
 > 股票
 
